@@ -1,22 +1,25 @@
 package com.example.examatejetpackcomposetask.screens.questions
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.ButtonDefaults
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.material.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.examatejetpackcomposetask.R
 import com.example.examatejetpackcomposetask.ui.theme.PrimaryColor
+import oralQuestions
+import writingQuestions
 
 @Composable
 fun QuestionsScreen() {
@@ -28,25 +31,9 @@ fun QuestionsScreen() {
                 .fillMaxSize()
                 .padding(16.dp)
         ) {
-            // Header and Tabs
-            Text(
-                text = "Questions",
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Bold,
-                color = PrimaryColor
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Row {
-                TabButton("Writing", selectedTab) { selectedTab = "Writing" }
-                Spacer(modifier = Modifier.width(16.dp))
-                TabButton("Oral", selectedTab) { selectedTab = "Oral" }
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // Show the question cards based on selected tab
+            Header()
+            TabRow(selectedTab) { selectedTab = it }
+            FilterRow()
             if (selectedTab == "Oral") {
                 OralQuestionsList()
             } else {
@@ -57,37 +44,64 @@ fun QuestionsScreen() {
 }
 
 @Composable
-fun TabButton(title: String, selectedTab: String, onClick: () -> Unit) {
-    TextButton(
-        onClick = onClick,
-        colors = ButtonDefaults.buttonColors(
-            containerColor = if (title == selectedTab) PrimaryColor else Color.Transparent
-        )
-    ) {
-        Text(
-            text = title,
-            color = if (title == selectedTab) Color.White else PrimaryColor,
-            fontWeight = FontWeight.Bold
-        )
+fun Header() {
+    Text(
+        text = "Questions",
+        fontSize = 24.sp,
+        fontWeight = FontWeight.Bold,
+        color = PrimaryColor
+    )
+}
+
+@Composable
+fun TabRow(selectedTab: String, onTabSelected: (String) -> Unit) {
+    Row {
+        TabButton("Writing", selectedTab) { onTabSelected("Writing") }
+        Spacer(modifier = Modifier.width(16.dp))
+        TabButton("Oral", selectedTab) { onTabSelected("Oral") }
     }
 }
 
 @Composable
+fun FilterRow() {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Text(
+            text = "Filter",
+            style = MaterialTheme.typography.titleLarge,
+            color = PrimaryColor
+        )
+        Spacer(modifier = Modifier.width(8.dp))
+        // Assuming you have a filter icon in your drawable resources
+        Icon(
+            painter = painterResource(id = R.drawable.filter),
+            contentDescription = "Filter Icon",
+            tint = PrimaryColor
+        )
+    }
+}
+@Composable
 fun OralQuestionsList() {
-    Column {
-        oralQuestions.forEach { question ->
-            OralQuestionCard(question)
+    LazyColumn {
+        items(oralQuestions.size) { index ->
+            OralQuestionCard(oralQuestions[index])
         }
     }
 }
 
 @Composable
 fun WritingQuestionsList() {
-    Column {
-        writingQuestions.forEach { question ->
-            WritingQuestionCard(question)
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(2),
+        modifier = Modifier.fillMaxSize(),
+        contentPadding = PaddingValues(8.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        items(writingQuestions.size) { index ->
+            WritingQuestionCard(writingQuestions[index])
         }
     }
 }
-
-
