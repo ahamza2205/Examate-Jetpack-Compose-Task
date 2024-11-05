@@ -1,4 +1,4 @@
-package com.example.examatejetpackcomposetask.screens
+package com.example.examatejetpackcomposetask.screens.questions
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.fillMaxSize

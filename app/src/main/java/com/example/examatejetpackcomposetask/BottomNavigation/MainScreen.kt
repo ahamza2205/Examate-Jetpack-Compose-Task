@@ -1,6 +1,5 @@
 package com.example.examatejetpackcomposetask.BottomNavigation
 
-
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -8,10 +7,10 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.examatejetpackcomposetask.screens.connect.ConnectScreen
-import com.example.examatejetpackcomposetask.screens.home.ui.HomeScreen
+import com.example.examatejetpackcomposetask.screens.connect.presentation.ConnectScreen
+import com.example.examatejetpackcomposetask.screens.home.presentation.HomeScreen
 import com.example.examatejetpackcomposetask.screens.ProfileScreen
-import com.example.examatejetpackcomposetask.screens.QuestionsScreen
+import com.example.examatejetpackcomposetask.screens.questions.QuestionsScreen
 import com.example.examatejetpackcomposetask.screens.ToolsScreen
 
 @Composable

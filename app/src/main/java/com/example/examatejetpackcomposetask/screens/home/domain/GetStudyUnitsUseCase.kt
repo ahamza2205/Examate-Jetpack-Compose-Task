@@ -1,6 +1,5 @@
 package com.example.examatejetpackcomposetask.screens.home.domain
 
-
 import javax.inject.Inject
 
 class GetStudyUnitsUseCase @Inject constructor(

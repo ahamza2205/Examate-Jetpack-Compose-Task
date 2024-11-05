@@ -1,4 +1,4 @@
-package com.example.examatejetpackcomposetask.screens.connect
+package com.example.examatejetpackcomposetask.screens.connect.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -24,11 +24,11 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.examatejetpackcomposetask.R
+import com.example.examatejetpackcomposetask.screens.connect.domain.StudyPartner
 import com.example.examatejetpackcomposetask.ui.theme.OnPrimaryColor
 import com.example.examatejetpackcomposetask.ui.theme.PrimaryColor
 import com.example.examatejetpackcomposetask.ui.theme.SecondaryColor
 import com.example.examatejetpackcomposetask.ui.theme.SurfaceColor
-
 
 @Composable
 fun StudyPartnerCard(partner: StudyPartner) {

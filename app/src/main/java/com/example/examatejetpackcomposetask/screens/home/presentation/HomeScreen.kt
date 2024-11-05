@@ -1,5 +1,4 @@
-package com.example.examatejetpackcomposetask.screens.home.ui
-
+package com.example.examatejetpackcomposetask.screens.home.presentation
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Icon
@@ -16,7 +15,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.examatejetpackcomposetask.R
-import com.example.examatejetpackcomposetask.screens.home.presentation.StudyUnitViewModel
+import com.example.examatejetpackcomposetask.screens.home.ui.StudyUnitItem
+import com.example.examatejetpackcomposetask.screens.home.ui.VerticalDivider
 import com.example.examatejetpackcomposetask.ui.theme.PrimaryColor
 import com.example.examatejetpackcomposetask.ui.theme.SecondaryColor
 import com.example.examatejetpackcomposetask.ui.theme.Typography

@@ -1,8 +1,8 @@
 package com.example.examatejetpackcomposetask.dependencyInjection
 
-import com.example.examatejetpackcomposetask.screens.connect.data.StudyPartnerRepositoryImpl
+import com.example.examatejetpackcomposetask.screens.connect.domain.GetStudyPartnersUseCase
 import com.example.examatejetpackcomposetask.screens.connect.domain.StudyPartnerRepository
-import com.example.examatejetpackcomposetask.screens.home.data.StudyUnitRepositoryImpl
+import com.example.examatejetpackcomposetask.screens.home.domain.GetStudyUnitsUseCase
 import com.example.examatejetpackcomposetask.screens.home.domain.StudyUnitRepository
 import dagger.Module
 import dagger.Provides
@@ -12,17 +12,16 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object RepositoryModule {
+object UseCaseModule {
 
     @Singleton
     @Provides
-    fun provideStudyUnitRepository(): StudyUnitRepository {
-        return StudyUnitRepositoryImpl()
+    fun provideGetStudyUnitsUseCase(repository: StudyUnitRepository): GetStudyUnitsUseCase {
+        return GetStudyUnitsUseCase(repository)
     }
-
     @Singleton
     @Provides
-    fun provideStudyPartnerRepository(): StudyPartnerRepository {
-        return StudyPartnerRepositoryImpl()
+    fun provideGetStudyPartnersUseCase(repository: StudyPartnerRepository): GetStudyPartnersUseCase {
+        return GetStudyPartnersUseCase(repository)
     }
 }

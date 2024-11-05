@@ -1,6 +1,5 @@
 package com.example.examatejetpackcomposetask.screens.home.presentation
 
-
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.examatejetpackcomposetask.screens.home.domain.GetStudyUnitsUseCase

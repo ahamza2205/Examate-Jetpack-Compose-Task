@@ -1,4 +1,4 @@
-package com.example.examatejetpackcomposetask.screens.connect
+package com.example.examatejetpackcomposetask.screens.connect.presentation
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -15,13 +15,16 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.examatejetpackcomposetask.R
+import com.example.examatejetpackcomposetask.screens.connect.ui.StudyPartnerCard
 import com.example.examatejetpackcomposetask.ui.theme.PrimaryColor
 import com.example.examatejetpackcomposetask.ui.theme.Typography
 
 @Preview(showBackground = true)
 @Composable
-fun ConnectScreen() {
+fun ConnectScreen(viewModel: ConnectViewModel = hiltViewModel()) {
+    val studyPartners = viewModel.studyPartners
     Surface(color = Color.White, modifier = Modifier.fillMaxSize()) {
         Column(
             modifier = Modifier
