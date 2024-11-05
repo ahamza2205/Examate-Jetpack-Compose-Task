@@ -1,34 +1,30 @@
-package com.example.examatejetpackcomposetask.screens.home
+package com.example.examatejetpackcomposetask.screens.home.ui
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
+
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.examatejetpackcomposetask.R
+import com.example.examatejetpackcomposetask.screens.home.presentation.StudyUnitViewModel
 import com.example.examatejetpackcomposetask.ui.theme.PrimaryColor
 import com.example.examatejetpackcomposetask.ui.theme.SecondaryColor
 import com.example.examatejetpackcomposetask.ui.theme.Typography
-@Preview(showBackground = true)
+
 @Composable
-fun HomeScreen() {
-    val studyUnits = listOf(
-        StudyUnit(1, "Unite 1:", "what is examate", false),
-        StudyUnit(2, "Unite 2:", "what is TCF", true),
-        StudyUnit(3, "Writing Tasks", "", true),
-        StudyUnit(4, "Oral Task", "", true)
-    )
+fun HomeScreen(viewModel: StudyUnitViewModel = hiltViewModel()) {
+    val studyUnits = viewModel.studyUnits.collectAsState().value
+
     Surface(color = Color.White, modifier = Modifier.fillMaxSize()) {
         Column(
             modifier = Modifier
@@ -105,4 +101,10 @@ fun HomeScreen() {
             }
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun PreviewHomeScreen() {
+    HomeScreen()
 }

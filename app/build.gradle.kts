@@ -115,13 +115,6 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
 
-    // Testing libraries
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit.v115)
-    androidTestImplementation(libs.androidx.espresso.core.v351)
-    androidTestImplementation(libs.androidx.compose.bom.v20241001)
-    androidTestImplementation(libs.ui.test.junit4)
-    debugImplementation(libs.ui.test.manifest)
 
     // Material 3
     implementation (libs.androidx.material3.v120alpha08)

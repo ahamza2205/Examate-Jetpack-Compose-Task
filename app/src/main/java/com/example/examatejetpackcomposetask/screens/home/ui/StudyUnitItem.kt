@@ -1,4 +1,4 @@
-package com.example.examatejetpackcomposetask.screens.home
+package com.example.examatejetpackcomposetask.screens.home.ui
 
 
 import androidx.compose.foundation.background
