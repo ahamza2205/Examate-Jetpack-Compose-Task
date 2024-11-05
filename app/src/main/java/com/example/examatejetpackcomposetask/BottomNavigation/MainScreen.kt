@@ -9,7 +9,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.examatejetpackcomposetask.screens.ConnectScreen
-import com.example.examatejetpackcomposetask.screens.HomeScreen
+import com.example.examatejetpackcomposetask.screens.home.HomeScreen
 import com.example.examatejetpackcomposetask.screens.ProfileScreen
 import com.example.examatejetpackcomposetask.screens.QuestionsScreen
 import com.example.examatejetpackcomposetask.screens.ToolsScreen

@@ -1,4 +1,4 @@
-package com.example.examatejetpackcomposetask.screens
+package com.example.examatejetpackcomposetask.screens.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -20,13 +20,6 @@ import com.example.examatejetpackcomposetask.ui.theme.PrimaryColor
 import com.example.examatejetpackcomposetask.ui.theme.SecondaryColor
 import com.example.examatejetpackcomposetask.ui.theme.Typography
 
-data class StudyUnit(
-    val number: Int,
-    val title: String,
-    val subtitle: String,
-    val isLocked: Boolean
-)
-
 @Composable
 fun HomeScreen() {
     val studyUnits = listOf(
@@ -35,7 +28,6 @@ fun HomeScreen() {
         StudyUnit(3, "Writing Tasks", "", true),
         StudyUnit(4, "Oral Task", "", true)
     )
-
     Surface(color = Color.White, modifier = Modifier.fillMaxSize()) {
         Column(
             modifier = Modifier
@@ -112,55 +104,4 @@ fun HomeScreen() {
             }
         }
     }
-}
-
-@Composable
-fun StudyUnitItem(unit: StudyUnit) {
-    Box(
-        modifier = Modifier
-            .size(100.dp)
-            .clip(CircleShape)
-            .background(if (unit.isLocked) SecondaryColor else PrimaryColor)
-            .border(
-                width = 4.dp,
-                color = if (unit.isLocked) PrimaryColor else SecondaryColor,
-                shape = CircleShape
-            )
-            .padding(16.dp),
-        contentAlignment = Alignment.Center
-    ) {
-        Box(
-            modifier = Modifier
-                .size(60.dp)
-                .clip(CircleShape)
-                .background(if (unit.isLocked) SecondaryColor else PrimaryColor),
-            contentAlignment = Alignment.Center
-        ) {
-            if (unit.isLocked) {
-                Icon(
-                    painter = painterResource(id = R.drawable.lock),
-                    contentDescription = "Locked",
-                    tint = Color.White,
-                    modifier = Modifier.size(50.dp)
-                )
-            } else {
-                Text(
-                    text = unit.number.toString(),
-                    color = Color.White,
-                    style = Typography.labelSmall.copy(fontSize = 58.sp)
-                )
-            }
-        }
-    }
-}
-
-
-@Composable
-fun VerticalDivider() {
-    Box(
-        modifier = Modifier
-            .width(12.dp)
-            .height(25.dp)
-            .background(SecondaryColor)
-    )
 }
