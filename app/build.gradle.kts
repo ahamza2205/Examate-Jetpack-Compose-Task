@@ -4,7 +4,6 @@ plugins {
     id("dagger.hilt.android.plugin")
     kotlin("kapt")
 }
-
 android {
     namespace = "com.example.examatejetpackcomposetask"
     compileSdk = 34
@@ -59,10 +58,7 @@ android {
         }
     }
 }
-
-
 dependencies {
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -78,50 +74,32 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-
-
     // Core AndroidX libraries
     implementation(libs.androidx.core.ktx.v1120)
     implementation(libs.androidx.lifecycle.runtime.ktx.v262)
     implementation(libs.androidx.activity.compose.v172)
-
     // Jetpack Compose libraries
-    implementation(libs.androidx.compose.bom.v20230901)
+    implementation(platform(libs.androidx.compose.bom.v20230901))
     implementation(libs.ui)
     implementation(libs.ui.graphics)
     implementation(libs.ui.tooling.preview)
     implementation(libs.material3)
     debugImplementation(libs.ui.tooling)
-
     // Dagger Hilt for Dependency Injection
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
     implementation (libs.androidx.hilt.navigation.compose)
-
-
-    // Retrofit for networking
-    implementation(libs.retrofit)
-    implementation(libs.converter.gson)
-
-    // Room for local database
-    implementation(libs.androidx.room.runtime)
-    kapt(libs.androidx.room.compiler)
-    implementation(libs.androidx.room.ktx)
-
     // Navigation Component for Jetpack Compose
     implementation(libs.androidx.navigation.compose)
-
-    // Coroutines for asynchronous tasks
+    // Coroutines for asynchronous
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
-
-
     // Material 3
     implementation (libs.androidx.material3.v120alpha08)
-    implementation ("androidx.compose.material:material:1.1.1")
-    implementation  ("androidx.compose.ui:ui:1.0.5")
-    implementation ("androidx.compose.material:material:1.0.5")
-    implementation ("androidx.compose.ui:ui-tooling-preview:1.0.5")
-    implementation ("androidx.navigation:navigation-compose:2.4.0-alpha10")
+    implementation (libs.material)
+    implementation  (libs.androidx.compose.ui.ui)
+    implementation (libs.material)
+    implementation (libs.androidx.compose.ui.ui.tooling.preview)
+    implementation (libs.androidx.navigation.compose.v240alpha10)
 }
 

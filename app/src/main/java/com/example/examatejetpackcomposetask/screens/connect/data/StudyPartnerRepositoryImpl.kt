@@ -7,7 +7,7 @@ import javax.inject.Singleton
 
 @Singleton
 class StudyPartnerRepositoryImpl @Inject constructor() : StudyPartnerRepository {
-    override fun getStudyPartners(): List<StudyPartner> {
+    override  suspend fun getStudyPartners(): List<StudyPartner> {
         return listOf(
             StudyPartner("Abdul-Rahman Hamza", "B1", listOf("English", "Arabic", "French"), "Egypt", "Male", 26, "Yesterday", "22 May 2023"),
             StudyPartner("Amira Mohamed", "B2", listOf("English", "Arabic", "French"), "Egypt", "Female", 25, "Yesterday", "23 March 2023"),

@@ -1,16 +1,12 @@
 package com.example.examatejetpackcomposetask.screens.home.presentation
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -18,17 +14,30 @@ import com.example.examatejetpackcomposetask.R
 import com.example.examatejetpackcomposetask.screens.home.domain.StudyUnit
 import com.example.examatejetpackcomposetask.screens.home.ui.StudyUnitItem
 import com.example.examatejetpackcomposetask.screens.home.ui.VerticalDivider
+import com.example.examatejetpackcomposetask.tutorial.FullScreenTutorialDialog
+import com.example.examatejetpackcomposetask.tutorial.NavBarTutorialDialog
 import com.example.examatejetpackcomposetask.ui.theme.PrimaryColor
 import com.example.examatejetpackcomposetask.ui.theme.SecondaryColor
 import com.example.examatejetpackcomposetask.ui.theme.Typography
 
-
-
 @Composable
 fun HomeScreen(viewModel: StudyUnitViewModel = hiltViewModel()) {
     val studyUnits = viewModel.studyUnits.collectAsState().value
+    var showTutorial by remember { mutableStateOf(true) }
+    var showNavBarTutorial by remember { mutableStateOf(false) }
 
     Surface(color = Color.White, modifier = Modifier.fillMaxSize()) {
+        if (showTutorial) {
+            FullScreenTutorialDialog(
+                onDismiss = { showTutorial = false },
+                onNextStep = { showNavBarTutorial = true },
+            )
+
+        }
+        if (showNavBarTutorial) {
+            NavBarTutorialDialog(onDismiss = { showNavBarTutorial = false })
+        }
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -40,7 +49,6 @@ fun HomeScreen(viewModel: StudyUnitViewModel = hiltViewModel()) {
         }
     }
 }
-
 @Composable
 fun HomeScreenHeader() {
     Row(
@@ -76,6 +84,7 @@ fun GreetingSection() {
         modifier = Modifier.padding(bottom = 16.dp)
     )
 }
+
 @Composable
 fun StudyPlanSection(studyUnits: List<StudyUnit>) {
     studyUnits.forEachIndexed { index, unit ->
@@ -123,10 +132,4 @@ fun StudyUnitDetails(unit: StudyUnit) {
             )
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun PreviewHomeScreen() {
-    HomeScreen()
 }

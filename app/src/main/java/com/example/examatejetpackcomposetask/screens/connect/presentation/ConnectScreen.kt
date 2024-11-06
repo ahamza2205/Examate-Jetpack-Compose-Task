@@ -21,65 +21,68 @@ import com.example.examatejetpackcomposetask.screens.connect.ui.StudyPartnerCard
 import com.example.examatejetpackcomposetask.ui.theme.PrimaryColor
 import com.example.examatejetpackcomposetask.ui.theme.Typography
 
+import androidx.compose.runtime.collectAsState
+import com.example.examatejetpackcomposetask.screens.connect.domain.StudyPartner
+
 @Preview(showBackground = true)
 @Composable
 fun ConnectScreen(viewModel: ConnectViewModel = hiltViewModel()) {
-    val studyPartners = viewModel.studyPartners
+    val studyPartners = viewModel.studyPartners.collectAsState().value
+
     Surface(color = Color.White, modifier = Modifier.fillMaxSize()) {
         Column(
             modifier = Modifier
                 .padding(16.dp)
                 .fillMaxSize()
         ) {
-            // Top title with centered alignment
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 24.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = "Connect",
-                    style = Typography.titleLarge.copy(fontSize = 32.sp, color = PrimaryColor)
-                )
-            }
-            // Icon and subtitle below the title
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = "Suggested Study Partners : ",
-                    color = PrimaryColor,
-                    fontSize = 20.sp
-                )
-                Spacer(modifier = Modifier.weight(1f))
-                Image(
-                    painter = painterResource(id = R.drawable.filter),
-                    contentDescription = "Suggestions icon",
-                    colorFilter = ColorFilter.tint(PrimaryColor),
-                    modifier = Modifier.size(24.dp)
-                )
-            }
-            Spacer(modifier = Modifier.height(8.dp))
-            // Sentence with info icon
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.align(Alignment.Start)
-            ) {
-
-            }
+            Header()
             Spacer(modifier = Modifier.height(16.dp))
-            // LazyColumn for displaying study partner cards
-            LazyColumn(
-                modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                items(studyPartners) { partner ->
-                    StudyPartnerCard(partner = partner)
-                }
-            }
+            StudyPartnersList(studyPartners)
         }
     }
 }
+
+@Composable
+fun Header() {
+    Column(
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Text(
+            text = "Connect",
+            style = Typography.titleLarge.copy(fontSize = 32.sp, color = PrimaryColor),
+            modifier = Modifier.padding(bottom = 24.dp)
+        )
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = "Suggested Study Partners : ",
+                color = PrimaryColor,
+                fontSize = 20.sp
+            )
+            Spacer(modifier = Modifier.weight(1f))
+            Image(
+                painter = painterResource(id = R.drawable.filter),
+                contentDescription = "Suggestions icon",
+                colorFilter = ColorFilter.tint(PrimaryColor),
+                modifier = Modifier.size(24.dp)
+            )
+        }
+    }
+}
+
+@Composable
+fun StudyPartnersList(studyPartners: List<StudyPartner>) {
+    LazyColumn(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        items(studyPartners) { partner ->
+            StudyPartnerCard(partner = partner)
+        }
+    }
+}
+
+
