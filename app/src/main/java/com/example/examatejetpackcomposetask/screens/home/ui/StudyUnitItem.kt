@@ -1,5 +1,6 @@
 package com.example.examatejetpackcomposetask.screens.home.ui
 
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -18,54 +19,72 @@ import com.example.examatejetpackcomposetask.R
 import com.example.examatejetpackcomposetask.screens.home.domain.StudyUnit
 import com.example.examatejetpackcomposetask.ui.theme.PrimaryColor
 import com.example.examatejetpackcomposetask.ui.theme.SecondaryColor
-import com.example.examatejetpackcomposetask.ui.theme.Typography
 
 @Composable
 fun StudyUnitItem(unit: StudyUnit) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
+    ) {
+        OuterCircleFrame(isLocked = unit.isLocked) {
+            InnerCircleContent(unit)
+        }
+        VerticalDivider(color = if (unit.isLocked) SecondaryColor else PrimaryColor)
+    }
+}
+
+@Composable
+fun OuterCircleFrame(isLocked: Boolean, content: @Composable () -> Unit) {
+    val frameColor = if (isLocked) SecondaryColor else PrimaryColor
+    val borderColor = if (isLocked) SecondaryColor else PrimaryColor
+
     Box(
         modifier = Modifier
-            .size(100.dp)
+            .size(80.dp)
             .clip(CircleShape)
-            .background(if (unit.isLocked) SecondaryColor else PrimaryColor)
+            .background(frameColor)
             .border(
                 width = 4.dp,
-                color = if (unit.isLocked) PrimaryColor else SecondaryColor,
+                color = borderColor,
                 shape = CircleShape
-            )
-            .padding(16.dp),
+            ),
         contentAlignment = Alignment.Center
     ) {
-        Box(
-            modifier = Modifier
-                .size(60.dp)
-                .clip(CircleShape)
-                .background(if (unit.isLocked) SecondaryColor else PrimaryColor),
-            contentAlignment = Alignment.Center
-        ) {
-            if (unit.isLocked) {
-                Icon(
-                    painter = painterResource(id = R.drawable.lock),
-                    contentDescription = "Locked",
-                    tint = Color.White,
-                    modifier = Modifier.size(50.dp)
-                )
-            } else {
-                Text(
-                    text = unit.number.toString(),
-                    color = Color.White,
-                    style = Typography.labelSmall.copy(fontSize = 58.sp)
-                )
-            }
+        content()
+    }
+}
+@Composable
+fun InnerCircleContent(unit: StudyUnit) {
+    Box(
+        modifier = Modifier
+            .size(50.dp)
+            .clip(CircleShape)
+            .background(Color.White),
+        contentAlignment = Alignment.Center
+    ) {
+        if (unit.isLocked) {
+            Icon(
+                painter = painterResource(id = R.drawable.lock),
+                contentDescription = "Locked",
+                tint = SecondaryColor,
+                modifier = Modifier.size(24.dp)
+            )
+        } else {
+            Text(
+                text = unit.number.toString(),
+                color = PrimaryColor,
+                fontSize = 28.sp
+            )
         }
     }
 }
 
 @Composable
-fun VerticalDivider() {
+fun VerticalDivider(color: Color) {
     Box(
         modifier = Modifier
             .width(12.dp)
             .height(25.dp)
-            .background(SecondaryColor)
+            .background(color)
     )
 }

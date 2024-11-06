@@ -15,11 +15,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.examatejetpackcomposetask.R
+import com.example.examatejetpackcomposetask.screens.home.domain.StudyUnit
 import com.example.examatejetpackcomposetask.screens.home.ui.StudyUnitItem
 import com.example.examatejetpackcomposetask.screens.home.ui.VerticalDivider
 import com.example.examatejetpackcomposetask.ui.theme.PrimaryColor
 import com.example.examatejetpackcomposetask.ui.theme.SecondaryColor
 import com.example.examatejetpackcomposetask.ui.theme.Typography
+
+
 
 @Composable
 fun HomeScreen(viewModel: StudyUnitViewModel = hiltViewModel()) {
@@ -31,74 +34,93 @@ fun HomeScreen(viewModel: StudyUnitViewModel = hiltViewModel()) {
                 .fillMaxSize()
                 .padding(16.dp)
         ) {
-            // Header with title and notification icon
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 24.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = "Home",
-                    style = Typography.titleLarge.copy(fontSize = 32.sp, color = PrimaryColor)
-                )
-                Icon(
-                    painter = painterResource(id = R.drawable.notifications),
-                    contentDescription = "Notification",
-                    tint = PrimaryColor,
-                    modifier = Modifier.size(32.dp)
-                )
+            HomeScreenHeader()
+            GreetingSection()
+            StudyPlanSection(studyUnits)
+        }
+    }
+}
+
+@Composable
+fun HomeScreenHeader() {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(bottom = 24.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = "Home",
+            style = Typography.titleLarge.copy(fontSize = 32.sp, color = PrimaryColor)
+        )
+        Icon(
+            painter = painterResource(id = R.drawable.notifications),
+            contentDescription = "Notification",
+            tint = PrimaryColor,
+            modifier = Modifier.size(32.dp)
+        )
+    }
+}
+
+@Composable
+fun GreetingSection() {
+    Text(
+        text = "Hi User Name",
+        style = Typography.bodyLarge.copy(fontSize = 24.sp, color = PrimaryColor),
+        modifier = Modifier.padding(bottom = 8.dp)
+    )
+    Text(
+        text = "Study Plan",
+        style = Typography.bodyLarge.copy(fontSize = 28.sp, color = PrimaryColor),
+        modifier = Modifier.padding(bottom = 16.dp)
+    )
+}
+@Composable
+fun StudyPlanSection(studyUnits: List<StudyUnit>) {
+    studyUnits.forEachIndexed { index, unit ->
+        StudyUnitRow(unit, showDividerBelow = index < studyUnits.size - 1)
+    }
+}
+
+@Composable
+fun StudyUnitRow(unit: StudyUnit, showDividerBelow: Boolean) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            StudyUnitItem(unit)
+
+            if (showDividerBelow) {
+                VerticalDivider(color = if (unit.isLocked) SecondaryColor else PrimaryColor)
             }
+        }
 
+        Spacer(modifier = Modifier.width(16.dp))
+
+        StudyUnitDetails(unit)
+    }
+}
+
+@Composable
+fun StudyUnitDetails(unit: StudyUnit) {
+    Column {
+        Text(
+            text = unit.title,
+            style = Typography.bodyLarge.copy(fontSize = 24.sp),
+            color = if (unit.isLocked) SecondaryColor else PrimaryColor
+        )
+        if (unit.subtitle.isNotEmpty()) {
             Text(
-                text = "Hi User Name",
-                style = Typography.bodyLarge.copy(fontSize = 24.sp, color = PrimaryColor),
-                modifier = Modifier.padding(bottom = 8.dp)
+                text = unit.subtitle,
+                style = Typography.labelSmall.copy(
+                    fontSize = 18.sp,
+                    color = if (unit.isLocked) SecondaryColor else PrimaryColor
+                )
             )
-            Text(
-                text = "Study Plan",
-                style = Typography.bodyLarge.copy(fontSize = 28.sp, color = PrimaryColor),
-                modifier = Modifier.padding(bottom = 16.dp)
-            )
-
-            studyUnits.forEachIndexed { index, unit ->
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.padding(vertical = 0.dp)
-                ) {
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        if (index > 0) {
-                            VerticalDivider()
-                        }
-
-                        StudyUnitItem(unit)
-
-                        if (index < studyUnits.size - 1) {
-                            VerticalDivider()
-                        }
-                    }
-
-                    Spacer(modifier = Modifier.width(16.dp))
-
-                    Column {
-                        Text(
-                            text = unit.title,
-                            style = Typography.bodyLarge.copy(fontSize = 24.sp),
-                            color = if (unit.isLocked) SecondaryColor else PrimaryColor
-                        )
-                        if (unit.subtitle.isNotEmpty()) {
-                            Text(
-                                text = unit.subtitle,
-                                style = Typography.labelSmall.copy(
-                                    fontSize = 18.sp,
-                                    color = SecondaryColor
-                                )
-                            )
-                        }
-                    }
-                }
-            }
         }
     }
 }

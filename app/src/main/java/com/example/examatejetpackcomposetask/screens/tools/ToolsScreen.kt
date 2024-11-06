@@ -1,4 +1,4 @@
-package com.example.examatejetpackcomposetask.screens
+package com.example.examatejetpackcomposetask.screens.tools
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,13 +11,13 @@ import androidx.compose.ui.graphics.Color
 
 
 @Composable
-fun ProfileScreen() {
+fun ToolsScreen() {
     Surface(color = Color.White, modifier = Modifier.fillMaxSize()) {
         Box(
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center
         ) {
-            Text(text = " Profile Screen", color = Color.Black)
+            Text(text = "Tools Screen", color = Color.Black)
         }
     }
 }

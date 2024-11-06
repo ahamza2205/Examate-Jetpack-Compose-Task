@@ -9,9 +9,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.examatejetpackcomposetask.screens.connect.presentation.ConnectScreen
 import com.example.examatejetpackcomposetask.screens.home.presentation.HomeScreen
-import com.example.examatejetpackcomposetask.screens.ProfileScreen
-import com.example.examatejetpackcomposetask.screens.questions.QuestionsScreen
-import com.example.examatejetpackcomposetask.screens.ToolsScreen
+import com.example.examatejetpackcomposetask.screens.profile.ProfileScreen
+import com.example.examatejetpackcomposetask.screens.questions.presentation.QuestionsScreen
+import com.example.examatejetpackcomposetask.screens.tools.ToolsScreen
 
 @Composable
 fun MainScreen() {

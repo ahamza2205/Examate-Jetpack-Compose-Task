@@ -12,7 +12,11 @@ class StudyUnitRepositoryImpl @Inject constructor() : StudyUnitRepository {
             StudyUnit(1, "Unit 1:", "What is Examate?", false),
             StudyUnit(2, "Unit 2:", "What is TCF?", true),
             StudyUnit(3, "Writing Tasks", "", true),
-            StudyUnit(4, "Oral Task", "", true)
+            StudyUnit(4, "Oral Task", "", true),
+            StudyUnit(5, "Writing Tasks", "", true),
+            StudyUnit(6, "Oral Task", "", true)
+
+
         )
     }
 }

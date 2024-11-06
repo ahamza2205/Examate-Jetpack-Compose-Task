@@ -1,4 +1,4 @@
-package com.example.examatejetpackcomposetask.screens.questions
+package com.example.examatejetpackcomposetask.screens.questions.presentation
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -16,14 +16,19 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.examatejetpackcomposetask.R
+import com.example.examatejetpackcomposetask.screens.questions.ui.OralQuestionCard
+import com.example.examatejetpackcomposetask.screens.questions.ui.TabButton
+import com.example.examatejetpackcomposetask.screens.questions.ui.WritingQuestionCard
+import com.example.examatejetpackcomposetask.screens.questions.domain.Question
 import com.example.examatejetpackcomposetask.ui.theme.PrimaryColor
-import oralQuestions
-import writingQuestions
 
 @Composable
-fun QuestionsScreen() {
+fun QuestionsScreen(viewModel: QuestionsViewModel = hiltViewModel()) {
     var selectedTab by remember { mutableStateOf("Oral") }
+    val oralQuestions = viewModel.oralQuestions.collectAsState().value
+    val writingQuestions = viewModel.writingQuestions.collectAsState().value
 
     Surface(color = Color.White, modifier = Modifier.fillMaxSize()) {
         Column(
@@ -35,9 +40,9 @@ fun QuestionsScreen() {
             TabRow(selectedTab) { selectedTab = it }
             FilterRow()
             if (selectedTab == "Oral") {
-                OralQuestionsList()
+                OralQuestionsList(oralQuestions)
             } else {
-                WritingQuestionsList()
+                WritingQuestionsList(writingQuestions)
             }
         }
     }
@@ -74,7 +79,6 @@ fun FilterRow() {
             color = PrimaryColor
         )
         Spacer(modifier = Modifier.width(8.dp))
-        // Assuming you have a filter icon in your drawable resources
         Icon(
             painter = painterResource(id = R.drawable.filter),
             contentDescription = "Filter Icon",
@@ -82,17 +86,18 @@ fun FilterRow() {
         )
     }
 }
+
 @Composable
-fun OralQuestionsList() {
+fun OralQuestionsList(questions: List<Question>) {
     LazyColumn {
-        items(oralQuestions.size) { index ->
-            OralQuestionCard(oralQuestions[index])
+        items(questions.size) { index ->
+            OralQuestionCard(questions[index])
         }
     }
 }
 
 @Composable
-fun WritingQuestionsList() {
+fun WritingQuestionsList(questions: List<Question>) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         modifier = Modifier.fillMaxSize(),
@@ -100,8 +105,8 @@ fun WritingQuestionsList() {
         verticalArrangement = Arrangement.spacedBy(8.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        items(writingQuestions.size) { index ->
-            WritingQuestionCard(writingQuestions[index])
+        items(questions.size) { index ->
+            WritingQuestionCard(questions[index])
         }
     }
 }

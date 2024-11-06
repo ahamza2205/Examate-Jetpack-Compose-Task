@@ -1,4 +1,4 @@
-package com.example.examatejetpackcomposetask.screens.questions
+package com.example.examatejetpackcomposetask.screens.questions.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
