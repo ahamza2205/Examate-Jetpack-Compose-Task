@@ -34,13 +34,14 @@ fun QuestionsScreen(
     val oralQuestions = viewModel.oralQuestions.collectAsState().value
     val writingQuestions = viewModel.writingQuestions.collectAsState().value
 
+    // State to control tutorial steps
     var tutorialStep by remember { mutableStateOf(1) }
 
+    // Handling the tutorial steps
     when (tutorialStep) {
         1 -> {
             QuestionsTutorialDialog(
-                text = "Voici les questions avec\n " +
-                        "des réponses modèles",
+                text = "Voici les questions avec\n des réponses modèles",
                 alignment = Alignment.BottomStart,
                 offsetX = 150.dp,
                 offsetY = -75.dp,
@@ -51,8 +52,7 @@ fun QuestionsScreen(
 
         2 -> {
             QuestionsTutorialDialog(
-                text = "Vous pouvez filtrer pour voir un type \n " +
-                        "exact de questions",
+                text = "Vous pouvez filtrer pour voir un type \n exact de questions",
                 alignment = Alignment.TopStart,
                 offsetX = 20.dp,
                 offsetY = 110.dp,
@@ -66,8 +66,7 @@ fun QuestionsScreen(
 
         3 -> {
             QuestionsTutorialDialog(
-                text = "Cliquez ici pour voir par catégories \n" +
-                        " avec progression",
+                text = "Cliquez ici pour voir par catégories \n avec progression",
                 alignment = Alignment.TopStart,
                 offsetX = 50.dp,
                 offsetY = 70.dp,
@@ -77,6 +76,7 @@ fun QuestionsScreen(
         }
     }
 
+    // Main layout with white background
     Surface(color = Color.White, modifier = Modifier.fillMaxSize()) {
         Column(
             modifier = Modifier
@@ -86,6 +86,7 @@ fun QuestionsScreen(
             Header()
             TabRow(selectedTab) { selectedTab = it }
             FilterRow()
+            // Display the list based on the selected tab
             if (selectedTab == "Oral") {
                 OralQuestionsList(oralQuestions)
             } else {
@@ -97,6 +98,7 @@ fun QuestionsScreen(
 
 @Composable
 fun Header() {
+    // Displays the title for the screen
     Text(
         text = "Questions",
         fontSize = 24.sp,
@@ -107,6 +109,7 @@ fun Header() {
 
 @Composable
 fun TabRow(selectedTab: String, onTabSelected: (String) -> Unit) {
+    // Row of buttons to switch between Oral and Writing tabs
     Row {
         TabButton("Writing", selectedTab) { onTabSelected("Writing") }
         Spacer(modifier = Modifier.width(16.dp))
@@ -116,6 +119,7 @@ fun TabRow(selectedTab: String, onTabSelected: (String) -> Unit) {
 
 @Composable
 fun FilterRow() {
+    // Row containing filter label and icon
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier.fillMaxWidth()
@@ -136,6 +140,7 @@ fun FilterRow() {
 
 @Composable
 fun OralQuestionsList(questions: List<Question>) {
+    // Displaying a list of oral questions using LazyColumn
     LazyColumn {
         items(questions.size) { index ->
             OralQuestionCard(questions[index])
@@ -145,6 +150,7 @@ fun OralQuestionsList(questions: List<Question>) {
 
 @Composable
 fun WritingQuestionsList(questions: List<Question>) {
+    // Displaying a grid of writing questions with two columns using LazyVerticalGrid
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         modifier = Modifier.fillMaxSize(),

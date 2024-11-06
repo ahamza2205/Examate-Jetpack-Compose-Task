@@ -34,10 +34,12 @@ fun ConnectScreen(
     navController: NavController,
     viewModel: ConnectViewModel = hiltViewModel()
 ) {
+    // Observe the list of study partners
     val studyPartners = viewModel.studyPartners.collectAsState().value
     var showConnectTutorial by remember { mutableStateOf(true) }
 
     Surface(color = Color.White, modifier = Modifier.fillMaxSize()) {
+        // Show tutorial dialog
         if (showConnectTutorial) {
             ConnectTutorialDialog(
                 onDismiss = { showConnectTutorial = false },
@@ -47,10 +49,12 @@ fun ConnectScreen(
                 }
             )
         }
+        // Main content showing the list of study partners
         MainContent(studyPartners)
     }
 }
 
+// Navigation function to go to the "Questions" screen
 private fun navigateToQuestions(navController: NavController) {
     navController.navigate(BottomNavItem.Questions.route) {
         popUpTo(BottomNavItem.Connect.route) { inclusive = true }
@@ -66,8 +70,10 @@ fun MainContent(studyPartners: List<StudyPartner>) {
             .padding(16.dp)
             .fillMaxSize()
     ) {
+        // Display the header with title and suggested partners label
         Header()
         Spacer(modifier = Modifier.height(16.dp))
+        // Display the list of study partners
         StudyPartnersList(studyPartners)
     }
 }
@@ -75,13 +81,16 @@ fun MainContent(studyPartners: List<StudyPartner>) {
 @Composable
 fun Header() {
     Column(modifier = Modifier.fillMaxWidth()) {
+        // Title of the screen
         TitleText()
+        // Suggested Study Partners header
         SuggestedPartnersHeader()
     }
 }
 
 @Composable
 fun TitleText() {
+    // Title text styled as per typography settings
     Text(
         text = "Connect",
         style = Typography.titleLarge.copy(fontSize = 32.sp, color = PrimaryColor),
@@ -95,18 +104,21 @@ fun SuggestedPartnersHeader() {
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ) {
+        // "Suggested Study Partners" label
         Text(
             text = "Suggested Study Partners : ",
             color = PrimaryColor,
             fontSize = 20.sp
         )
         Spacer(modifier = Modifier.weight(1f))
+        // Filter icon on the right side
         FilterIcon()
     }
 }
 
 @Composable
 fun FilterIcon() {
+    // Icon image for filter functionality
     Image(
         painter = painterResource(id = R.drawable.filter),
         contentDescription = "Suggestions icon",
@@ -117,10 +129,12 @@ fun FilterIcon() {
 
 @Composable
 fun StudyPartnersList(studyPartners: List<StudyPartner>) {
+    // LazyColumn to display the list of study partners
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
+        // Display each study partner as a card
         items(studyPartners) { partner ->
             StudyPartnerCard(partner = partner)
         }
@@ -129,6 +143,7 @@ fun StudyPartnersList(studyPartners: List<StudyPartner>) {
 
 @Composable
 fun ConnectTutorialDialog(onDismiss: () -> Unit, onNextStep: () -> Unit) {
+    // Dialog for showing a tutorial to guide users
     TutorialDialog(
         text = "Vous trouverez ici des partenaires\n" + "d'étude et des personnes avec qui vous\n" + "connecter",
         alignment = Alignment.BottomStart,

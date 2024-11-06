@@ -28,16 +28,21 @@ fun HomeScreen(
     viewModel: StudyUnitViewModel = hiltViewModel()
 ) {
     val studyUnits = viewModel.studyUnits.collectAsState().value
+
+
     var showTutorial by remember { mutableStateOf(true) }
     var showNavBarTutorial by remember { mutableStateOf(false) }
 
+
     Surface(color = Color.White, modifier = Modifier.fillMaxSize()) {
+        // Show full-screen tutorial
         if (showTutorial) {
             FullScreenTutorialDialog(
                 onDismiss = { showTutorial = false },
                 onNextStep = { showNavBarTutorial = true },
             )
         }
+        // Show navigation tutorial
         if (showNavBarTutorial) {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.TopStart) {
                 TutorialDialog(
@@ -46,6 +51,7 @@ fun HomeScreen(
                     onDismiss = { showNavBarTutorial = false },
                     onNextStep = {
                         showNavBarTutorial = false
+                        // Navigate to the "Connect" screen
                         navController.navigate(BottomNavItem.Connect.route) {
                             popUpTo(BottomNavItem.Home.route) { inclusive = true }
                             launchSingleTop = true
@@ -58,6 +64,7 @@ fun HomeScreen(
             }
         }
 
+        // Column layout containing the header, greeting, and study plan sections
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -69,8 +76,10 @@ fun HomeScreen(
         }
     }
 }
+
 @Composable
 fun HomeScreenHeader() {
+    // Header section with "Home" title and notification icon
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -93,6 +102,7 @@ fun HomeScreenHeader() {
 
 @Composable
 fun GreetingSection() {
+    // Section displaying greeting text and "Study Plan" heading
     Text(
         text = "Hi User Name",
         style = Typography.bodyLarge.copy(fontSize = 24.sp, color = PrimaryColor),
@@ -107,6 +117,7 @@ fun GreetingSection() {
 
 @Composable
 fun StudyPlanSection(studyUnits: List<StudyUnit>) {
+    // Loop through each study unit and display it as a row
     studyUnits.forEachIndexed { index, unit ->
         StudyUnitRow(unit, showDividerBelow = index < studyUnits.size - 1)
     }
@@ -114,6 +125,7 @@ fun StudyPlanSection(studyUnits: List<StudyUnit>) {
 
 @Composable
 fun StudyUnitRow(unit: StudyUnit, showDividerBelow: Boolean) {
+    // Layout for each study unit with a divider if it's not the last item
     Row(
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -121,8 +133,10 @@ fun StudyUnitRow(unit: StudyUnit, showDividerBelow: Boolean) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
+            // Display study unit item
             StudyUnitItem(unit)
 
+            // Show a divider below if `showDividerBelow` is true
             if (showDividerBelow) {
                 VerticalDivider(color = if (unit.isLocked) SecondaryColor else PrimaryColor)
             }
@@ -130,18 +144,21 @@ fun StudyUnitRow(unit: StudyUnit, showDividerBelow: Boolean) {
 
         Spacer(modifier = Modifier.width(16.dp))
 
+        // Display study unit details (title and subtitle)
         StudyUnitDetails(unit)
     }
 }
 
 @Composable
 fun StudyUnitDetails(unit: StudyUnit) {
+    // Column layout to show details of each study unit
     Column {
         Text(
             text = unit.title,
             style = Typography.bodyLarge.copy(fontSize = 24.sp),
             color = if (unit.isLocked) SecondaryColor else PrimaryColor
         )
+        // Display subtitle if it exists
         if (unit.subtitle.isNotEmpty()) {
             Text(
                 text = unit.subtitle,
