@@ -17,7 +17,7 @@ import com.example.examatejetpackcomposetask.screens.home.domain.StudyUnit
 import com.example.examatejetpackcomposetask.screens.home.ui.StudyUnitItem
 import com.example.examatejetpackcomposetask.screens.home.ui.VerticalDivider
 import com.example.examatejetpackcomposetask.tutorial.FullScreenTutorialDialog
-import com.example.examatejetpackcomposetask.tutorial.NavBarTutorialDialog
+import com.example.examatejetpackcomposetask.tutorial.TutorialDialog
 import com.example.examatejetpackcomposetask.ui.theme.PrimaryColor
 import com.example.examatejetpackcomposetask.ui.theme.SecondaryColor
 import com.example.examatejetpackcomposetask.ui.theme.Typography
@@ -40,7 +40,7 @@ fun HomeScreen(
         }
         if (showNavBarTutorial) {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.TopStart) {
-                NavBarTutorialDialog(
+                TutorialDialog(
                     text = "Vous trouverez ici votre plan d'étude",
                     alignment = Alignment.BottomStart,
                     onDismiss = { showNavBarTutorial = false },

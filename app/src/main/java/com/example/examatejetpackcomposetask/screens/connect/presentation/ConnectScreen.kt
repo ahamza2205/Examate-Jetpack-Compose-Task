@@ -27,7 +27,7 @@ import androidx.compose.runtime.setValue
 import androidx.navigation.NavController
 import com.example.examatejetpackcomposetask.BottomNavigation.BottomNavItem
 import com.example.examatejetpackcomposetask.screens.connect.domain.StudyPartner
-import com.example.examatejetpackcomposetask.tutorial.NavBarTutorialDialog
+import com.example.examatejetpackcomposetask.tutorial.TutorialDialog
 
 @Composable
 fun ConnectScreen(
@@ -129,7 +129,7 @@ fun StudyPartnersList(studyPartners: List<StudyPartner>) {
 
 @Composable
 fun ConnectTutorialDialog(onDismiss: () -> Unit, onNextStep: () -> Unit) {
-    NavBarTutorialDialog(
+    TutorialDialog(
         text = "Vous trouverez ici des partenaires\n" + "d'étude et des personnes avec qui vous\n" + "connecter",
         alignment = Alignment.BottomStart,
         onDismiss = onDismiss,

@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -22,13 +23,59 @@ import com.example.examatejetpackcomposetask.screens.questions.ui.OralQuestionCa
 import com.example.examatejetpackcomposetask.screens.questions.ui.TabButton
 import com.example.examatejetpackcomposetask.screens.questions.ui.WritingQuestionCard
 import com.example.examatejetpackcomposetask.screens.questions.domain.Question
+import com.example.examatejetpackcomposetask.tutorial.TutorialDialog
 import com.example.examatejetpackcomposetask.ui.theme.PrimaryColor
 
 @Composable
-fun QuestionsScreen(viewModel: QuestionsViewModel = hiltViewModel()) {
+fun QuestionsScreen(
+    viewModel: QuestionsViewModel = hiltViewModel()
+) {
     var selectedTab by remember { mutableStateOf("Oral") }
     val oralQuestions = viewModel.oralQuestions.collectAsState().value
     val writingQuestions = viewModel.writingQuestions.collectAsState().value
+
+    var tutorialStep by remember { mutableStateOf(1) }
+
+    when (tutorialStep) {
+        1 -> {
+            QuestionsTutorialDialog(
+                text = "Voici les questions avec\n " +
+                        "des réponses modèles",
+                alignment = Alignment.BottomStart,
+                offsetX = 150.dp,
+                offsetY = -75.dp,
+                onDismiss = { tutorialStep = 0 },
+                onNextStep = { tutorialStep = 2 }
+            )
+        }
+
+        2 -> {
+            QuestionsTutorialDialog(
+                text = "Vous pouvez filtrer pour voir un type \n " +
+                        "exact de questions",
+                alignment = Alignment.TopStart,
+                offsetX = 20.dp,
+                offsetY = 110.dp,
+                onDismiss = { tutorialStep = 0 },
+                onNextStep = {
+                    tutorialStep = 3
+                    selectedTab = "Writing"
+                }
+            )
+        }
+
+        3 -> {
+            QuestionsTutorialDialog(
+                text = "Cliquez ici pour voir par catégories \n" +
+                        " avec progression",
+                alignment = Alignment.TopStart,
+                offsetX = 50.dp,
+                offsetY = 70.dp,
+                onDismiss = { tutorialStep = 0 },
+                onNextStep = { tutorialStep = 0 }
+            )
+        }
+    }
 
     Surface(color = Color.White, modifier = Modifier.fillMaxSize()) {
         Column(
@@ -109,4 +156,23 @@ fun WritingQuestionsList(questions: List<Question>) {
             WritingQuestionCard(questions[index])
         }
     }
+}
+
+@Composable
+fun QuestionsTutorialDialog(
+    text: String,
+    alignment: Alignment,
+    offsetX: Dp,
+    offsetY: Dp,
+    onDismiss: () -> Unit,
+    onNextStep: () -> Unit
+) {
+    TutorialDialog(
+        text = text,
+        alignment = alignment,
+        onDismiss = onDismiss,
+        onNextStep = onNextStep,
+        offsetX = offsetX,
+        offsetY = offsetY
+    )
 }

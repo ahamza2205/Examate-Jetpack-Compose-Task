@@ -19,8 +19,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.draw.clip
+
 @Composable
-fun NavBarTutorialDialog(
+fun TutorialDialog(
     text: String,
     alignment: Alignment,
     onDismiss: () -> Unit,
@@ -41,6 +44,7 @@ fun NavBarTutorialDialog(
             Column(
                 modifier = Modifier
                     .wrapContentWidth()
+                    .clip(RoundedCornerShape(16.dp))
                     .background(Color.Black.copy(alpha = 0.7f))
                     .padding(8.dp),
             ) {
