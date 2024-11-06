@@ -24,11 +24,12 @@ fun MainScreen() {
             startDestination = BottomNavItem.Home.route,
             Modifier.padding(innerPadding)
         ) {
-            composable(BottomNavItem.Home.route) { HomeScreen() }
-            composable(BottomNavItem.Connect.route) { ConnectScreen() }
+            composable(BottomNavItem.Home.route) { HomeScreen(navController = navController) }
+            composable(BottomNavItem.Connect.route) { ConnectScreen(navController = navController) }
             composable(BottomNavItem.Questions.route) { QuestionsScreen() }
             composable(BottomNavItem.Tools.route) { ToolsScreen() }
             composable(BottomNavItem.Profile.route) { ProfileScreen() }
         }
     }
 }
+

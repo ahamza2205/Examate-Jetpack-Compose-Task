@@ -14,6 +14,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import com.example.examatejetpackcomposetask.ui.theme.PrimaryColor
+import com.example.examatejetpackcomposetask.ui.theme.SecondaryColor
 
 @Composable
 fun FullScreenTutorialDialog(onDismiss: () -> Unit, onNextStep: () -> Unit) {
@@ -31,19 +33,18 @@ fun FullScreenTutorialDialog(onDismiss: () -> Unit, onNextStep: () -> Unit) {
             contentAlignment = Alignment.Center
         ) {
             Column(
-                modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
                     text = "Welcome to: How to use and enjoy Examate",
-                    color = Color.White,
-                    fontSize = 20.sp,
+                    color = SecondaryColor,
+                    fontSize = 18.sp,
                     modifier = Modifier.padding(bottom = 16.dp)
                 )
                 Text(
                     text = "Tap anywhere on the screen to continue",
-                    color = Color.Cyan,
-                    fontSize = 16.sp
+                    color = PrimaryColor,
+                    fontSize = 20.sp
                 )
             }
         }

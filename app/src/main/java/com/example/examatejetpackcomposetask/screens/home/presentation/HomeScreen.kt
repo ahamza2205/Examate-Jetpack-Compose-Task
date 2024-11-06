@@ -10,6 +10,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import com.example.examatejetpackcomposetask.BottomNavigation.BottomNavItem
 import com.example.examatejetpackcomposetask.R
 import com.example.examatejetpackcomposetask.screens.home.domain.StudyUnit
 import com.example.examatejetpackcomposetask.screens.home.ui.StudyUnitItem
@@ -21,7 +23,10 @@ import com.example.examatejetpackcomposetask.ui.theme.SecondaryColor
 import com.example.examatejetpackcomposetask.ui.theme.Typography
 
 @Composable
-fun HomeScreen(viewModel: StudyUnitViewModel = hiltViewModel()) {
+fun HomeScreen(
+    navController: NavController,
+    viewModel: StudyUnitViewModel = hiltViewModel()
+) {
     val studyUnits = viewModel.studyUnits.collectAsState().value
     var showTutorial by remember { mutableStateOf(true) }
     var showNavBarTutorial by remember { mutableStateOf(false) }
@@ -32,10 +37,25 @@ fun HomeScreen(viewModel: StudyUnitViewModel = hiltViewModel()) {
                 onDismiss = { showTutorial = false },
                 onNextStep = { showNavBarTutorial = true },
             )
-
         }
         if (showNavBarTutorial) {
-            NavBarTutorialDialog(onDismiss = { showNavBarTutorial = false })
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.TopStart) {
+                NavBarTutorialDialog(
+                    text = "Vous trouverez ici votre plan d'étude",
+                    alignment = Alignment.BottomStart,
+                    onDismiss = { showNavBarTutorial = false },
+                    onNextStep = {
+                        showNavBarTutorial = false
+                        navController.navigate(BottomNavItem.Connect.route) {
+                            popUpTo(BottomNavItem.Home.route) { inclusive = true }
+                            launchSingleTop = true
+                            restoreState = true
+                        }
+                    },
+                    offsetX = -10.dp,
+                    offsetY = -75.dp
+                )
+            }
         }
 
         Column(
